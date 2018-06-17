@@ -30,6 +30,7 @@ function generateItemElement(item, itemIndex, template) {
 
 //takes in an array (shopping list)
 //iterates through each element
+//if that item 'show' attribute is true, then it
 //turns it into an <li> using generateItemElement()
 //returns all the <li>'s joined into one string
 function generateShoppingItemsString(shoppingList) {
@@ -45,7 +46,7 @@ function generateShoppingItemsString(shoppingList) {
 
 
 //generates an HTML string from the shopping list using 
-//generateShoppingItemsString(STORE)
+//generateShoppingItgit emsString(STORE)
 //inserts the HTML string inside the <ul>
 function renderShoppingList() {
   // render the shopping list in the DOM
@@ -99,10 +100,10 @@ function getItemIndexFromElement(item) {
   return parseInt(itemIndexString, 10);
 }
 
-//if item has show: false
 
-//when filter checkbox is checked, if checked attribute 
+//when filter checkbox is changed, if checked attribute 
 //is true, changes all "checked" items to show: false
+//if checked attribute is fales, reassign all items 'show: true'
 function reassignShow(listArr) {
   $('.js-checked-filter').on('change', 'input', event => {
     const checkedBox = event.target.checked;
@@ -113,6 +114,10 @@ function reassignShow(listArr) {
         } else {
           listArr[i]['show'] = true;
         }
+      }
+    } else {
+      for(let i = 0; i<listArr.length; i++) {
+        listArr[i]['show'] = true;
       }
     }
     console.log(listArr);
