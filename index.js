@@ -104,7 +104,7 @@ function getItemIndexFromElement(item) {
 //when filter checkbox is changed, if checked attribute 
 //is true, changes all "checked" items to show: false
 //if checked attribute is fales, reassign all items 'show: true'
-function reassignShow(listArr) {
+function reassignShowByCheckbox(listArr) {
   $('.js-checked-filter').on('change', 'input', event => {
     const checkedBox = event.target.checked;
     if (checkedBox === true) {
@@ -125,7 +125,33 @@ function reassignShow(listArr) {
   });
 }
 
-reassignShow(STORE);
+
+function reassignShowBySearch(listArr) {
+  $('.js-search-list').on('change', '.checkbox', event => {
+    const searchInput = $('.js-search-list .text').val();
+    console.log(searchInput);
+    const checkedBox = event.target.checked;
+    if (checkedBox === true) {
+      listArr.forEach(item => {
+        item['show'] = false;
+        if (item['name'] === searchInput) {
+          item['show'] = true;
+        }
+      });
+    } else {
+      listArr.forEach(item => item['show'] = true);
+    }
+    renderShoppingList();
+    $('.js-search-list .text').val('');
+  })
+}
+
+
+//runs all the 'reassign' functions on the STORE array
+function handleShowKey () {
+  reassignShowByCheckbox(STORE);
+  reassignShowBySearch(STORE);
+}
 
 
 function handleItemCheckClicked() {
@@ -160,6 +186,7 @@ function handleShoppingList() {
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
+  handleShowKey();
 }
 
 // when the page loads, call `handleShoppingList`
