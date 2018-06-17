@@ -49,3 +49,10 @@ button:hover {
 .shopping-item__checked {
   text-decoration: line-through;
 }
+
+.edit-name {
+  display: inline-block;
+  border: 1px solid black;
+  margin-left: 20px;
+  padding: 3px;
+}

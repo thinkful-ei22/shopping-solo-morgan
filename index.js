@@ -23,6 +23,11 @@ function generateItemElement(item, itemIndex, template) {
         <button class="shopping-item-delete js-item-delete">
             <span class="button-label">delete</span>
         </button>
+        <div class='edit-name'>
+          <input type='text' placeholder='edit item name' name='edit-item-name' class='edit-name-text'>
+          <button class='js-item-edit' type='button'><span class='button-label'>Change Item Name</span>
+          </button>
+        </div>
       </div>
     </li>`;
 }
@@ -147,6 +152,16 @@ function reassignShowBySearch(listArr) {
 }
 
 
+function reassignName(listArr) {
+  $('.js-shopping-list').on('click', '.edit-name button', event => {
+    const newName = $(event.currentTarget).closest('.edit-name').children('.edit-name-text').val();
+    const itemIndex = getItemIndexFromElement(event.currentTarget);
+    listArr[itemIndex]['name'] = newName;
+    renderShoppingList();    
+  });
+}
+
+
 //runs all the 'reassign' functions on the STORE array
 function handleShowKey () {
   reassignShowByCheckbox(STORE);
@@ -187,6 +202,7 @@ function handleShoppingList() {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleShowKey();
+  reassignName(STORE);
 }
 
 // when the page loads, call `handleShoppingList`
