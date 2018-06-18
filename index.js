@@ -130,7 +130,9 @@ function reassignShowByCheckbox(listArr) {
   });
 }
 
-
+/* When Search-checkbox is changed, value is grabbed from text box
+if checked, change all 'show' to false, except for items whose name
+matches the input.  Then list is re-rendered. */
 function reassignShowBySearch(listArr) {
   $('.js-search-list').on('change', '.checkbox', event => {
     const searchInput = $('.js-search-list .text').val();
@@ -139,19 +141,22 @@ function reassignShowBySearch(listArr) {
     if (checkedBox === true) {
       listArr.forEach(item => {
         item['show'] = false;
-        if (item['name'] === searchInput) {
+        if (item['name'].startsWith(searchInput) === true) {
           item['show'] = true;
         }
       });
     } else {
       listArr.forEach(item => item['show'] = true);
+      $('.js-search-list .text').val('');
     }
     renderShoppingList();
-    $('.js-search-list .text').val('');
   })
 }
 
 
+/* When user clicks on Change-Name button, it triggers an event where
+value is grabbed from textbox, STORES array is modified, then page is 
+re-rendered. */
 function reassignName(listArr) {
   $('.js-shopping-list').on('click', '.edit-name button', event => {
     const newName = $(event.currentTarget).closest('.edit-name').children('.edit-name-text').val();
